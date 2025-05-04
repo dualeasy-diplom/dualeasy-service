@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
@@ -29,6 +30,18 @@ class ServiceController(
             )
         return ResponseEntity.ok(created)
     }
+
+    @PutMapping("/edit/{serviceId}")
+    fun updateService(
+        container: RequestContainer<ServiceRequestDto>,
+        @PathVariable serviceId: Long,
+    ): ResponseEntity<Service> =
+        ResponseEntity.ok(
+            serviceService.updateService(
+                container.request.toService(clientId = container.clientId!!),
+                serviceId,
+            ),
+        )
 
     @DeleteMapping("/{id}")
     fun deleteService(
@@ -51,4 +64,14 @@ class ServiceController(
     fun getServiceById(
         @PathVariable id: Long,
     ): Service = serviceService.getById(id)
+
+    @GetMapping("/service/client/my")
+    fun getMyServices(
+        @RequestHeader("X-Client-Id") clientId: String,
+    ) = serviceService.getAllByClientId(clientId)
+
+    @GetMapping("/service/client/{clientId}")
+    fun getServiceByClientId(
+        @PathVariable clientId: String,
+    ) = serviceService.getAllByClientId(clientId).also { println(1) }
 }

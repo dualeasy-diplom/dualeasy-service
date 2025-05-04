@@ -20,6 +20,25 @@ class ServiceService(
     }
 
     fun updateService(
+        service: Service,
+        id: Long,
+    ): Service {
+        val foundService = getById(id)
+        if (foundService.clientId != service.clientId) {
+            throw PERMISSION_DENIED
+        }
+        foundService.apply {
+            name = service.name
+            price = service.price
+            address = service.address
+            description = service.description
+            mainPhoto = service.mainPhoto
+        }
+        serviceRepository.save(foundService)
+        return foundService
+    }
+
+    fun updateService(
         serviceId: Long,
         rating: BigDecimal,
     ): Service {
