@@ -47,7 +47,7 @@ class ServiceController(
     fun deleteService(
         @PathVariable id: Long,
         @RequestHeader("X-Client-Id") clientId: String,
-    ): ResponseEntity<Void> {
+    ): ResponseEntity<Unit> {
         serviceService.deleteService(id, clientId)
         return ResponseEntity.noContent().build()
     }
@@ -73,5 +73,5 @@ class ServiceController(
     @GetMapping("/service/client/{clientId}")
     fun getServiceByClientId(
         @PathVariable clientId: String,
-    ) = serviceService.getAllByClientId(clientId).also { println(1) }
+    ) = serviceService.getAllByClientId(clientId)
 }

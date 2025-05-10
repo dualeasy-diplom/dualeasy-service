@@ -14,12 +14,14 @@ import java.time.LocalDateTime
 data class CalendarSlot(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-    val clientId: Long,
+    val ownerId: String,
+    val serviceId: Long? = null,
+    val clientId: String? = null,
     val startTime: LocalDateTime,
     val endTime: LocalDateTime,
     @Enumerated(EnumType.STRING)
-    val status: CalendarSlotStatus,
-    val note: String,
+    val status: CalendarSlotStatus = CalendarSlotStatus.AVAILABLE,
+    val note: String? = null,
 ) {
     enum class CalendarSlotStatus {
         UNAVAILABLE,
