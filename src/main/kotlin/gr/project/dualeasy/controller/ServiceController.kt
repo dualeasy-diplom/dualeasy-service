@@ -34,7 +34,7 @@ class ServiceController(
     )
     @PostMapping("/create")
     fun createService(
-        @RequestBody container: RequestContainer<ServiceRequestDto>,
+        container: RequestContainer<ServiceRequestDto>,
     ): ResponseEntity<Service> {
         val created =
             serviceService.createService(
@@ -46,7 +46,7 @@ class ServiceController(
     @Operation(summary = "Обновить сервис")
     @PutMapping("/edit/{serviceId}")
     fun updateService(
-        @RequestBody container: RequestContainer<ServiceRequestDto>,
+        container: RequestContainer<ServiceRequestDto>,
         @PathVariable serviceId: Long,
     ): ResponseEntity<Service> =
         ResponseEntity.ok(
