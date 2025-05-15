@@ -33,9 +33,7 @@ class ServiceController(
         ApiResponse(responseCode = "400", description = "Неверный запрос"),
     )
     @PostMapping("/create")
-    fun createService(
-        container: RequestContainer<ServiceRequestDto>,
-    ): ResponseEntity<Service> {
+    fun createService(container: RequestContainer<ServiceRequestDto>): ResponseEntity<Service> {
         val created =
             serviceService.createService(
                 container.request.toService(clientId = container.clientId!!),

@@ -13,11 +13,11 @@ data class Service(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
     var clientId: String,
-    var name: String,
-    var description: String,
+    var name: String = "",
+    var description: String = "",
     var address: String? = null,
     var mainPhoto: String? = null,
     var rating: BigDecimal? = null,
-    var price: BigDecimal,
+    var price: BigDecimal = BigDecimal(0),
     var categoryId: Long? = null,
 )

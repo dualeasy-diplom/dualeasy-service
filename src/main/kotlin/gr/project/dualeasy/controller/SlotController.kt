@@ -25,9 +25,7 @@ class SlotController(
 ) {
     @Operation(summary = "Создать слоты")
     @PostMapping
-    fun createSlots(
-        request: RequestContainer<SlotRequestDto>,
-    ) {
+    fun createSlots(request: RequestContainer<SlotRequestDto>) {
         bookingService.createSlots(request.request, request.clientId!!)
     }
 
