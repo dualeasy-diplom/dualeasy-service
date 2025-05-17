@@ -50,10 +50,15 @@ class SlotController(
     @Operation(summary = "Забронировать слот")
     @PostMapping("/{id}/book")
     fun bookSlot(
-        @RequestHeader("X-Client-Id") clientId: String,
         @PathVariable id: Long,
-        request: BookSlotRequest,
-    ): CalendarSlot = bookingService.bookSlot(id, clientId, request.serviceId, request.note)
+        requestContainer: RequestContainer<BookSlotRequest>,
+    ): CalendarSlot =
+        bookingService.bookSlot(
+            id,
+            requestContainer.clientId!!,
+            requestContainer.request.serviceId,
+            requestContainer.request.note,
+        )
 
     @Operation(summary = "Получить слоты по владельцу")
     @GetMapping("/owner/{ownerId}")
