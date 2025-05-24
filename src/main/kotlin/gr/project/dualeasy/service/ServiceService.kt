@@ -63,8 +63,11 @@ class ServiceService(
 
     fun getAll(): List<Service> = serviceRepository.findAll()
 
-    fun getByIds(ids: List<Long>) = serviceRepository.findAllByIdIn(ids)
-
+    fun getByIds(ids: List<Long>): List<Service> {
+        val services = serviceRepository.findAllByIdIn(ids)
+        val servicesById = services.associateBy { it.id }
+        return ids.mapNotNull { servicesById[it] }
+    }
     fun getAllByClientId(clientId: String) = serviceRepository.findAllByClientId(clientId)
 
     fun getById(id: Long) = serviceRepository.findById(id).orElseThrow { NOT_FOUND_EXCEPTION }

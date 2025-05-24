@@ -41,7 +41,7 @@ class ServiceController(
         return ResponseEntity.ok(created)
     }
 
-    @Operation(summary = "Обновить сервис")
+    @Operation(summary = "Обновить услугу")
     @PutMapping("/edit/{serviceId}")
     fun updateService(
         container: RequestContainer<ServiceRequestDto>,
@@ -54,7 +54,7 @@ class ServiceController(
             ),
         )
 
-    @Operation(summary = "Удалить сервис")
+    @Operation(summary = "Удалить услугу")
     @DeleteMapping("/{id}")
     fun deleteService(
         @PathVariable id: Long,
