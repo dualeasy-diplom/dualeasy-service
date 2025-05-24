@@ -41,6 +41,23 @@ spring:
       type: single
       ack-mode: record
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 15MB
+
+storage:
+  cloud:
+    endpoint:
+      url: storage.yandexcloud.net
+      region: ru-central1
+    access:
+      key:
+    secret:
+      key:
+    bucket:
+      name: dualeasy-diplom
+
 springdoc:
   api-docs:
     enabled: true

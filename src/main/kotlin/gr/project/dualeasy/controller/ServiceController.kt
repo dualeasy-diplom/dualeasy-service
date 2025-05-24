@@ -5,6 +5,7 @@ import gr.project.dualeasy.data.dto.GetServicesRequestDto
 import gr.project.dualeasy.data.dto.ServiceRequestDto
 import gr.project.dualeasy.data.dto.toService
 import gr.project.dualeasy.data.model.Service
+import gr.project.dualeasy.service.FileService
 import gr.project.dualeasy.service.ServiceService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -26,18 +27,26 @@ import org.springframework.web.bind.annotation.RestController
 @Tag(name = "Services", description = "Управление сервисами")
 class ServiceController(
     private val serviceService: ServiceService,
+    private val fileService: FileService,
 ) {
     @Operation(summary = "Создать сервис")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Сервис создан"),
         ApiResponse(responseCode = "400", description = "Неверный запрос"),
     )
-    @PostMapping("/create")
-    fun createService(container: RequestContainer<ServiceRequestDto>): ResponseEntity<Service> {
-        val created =
-            serviceService.createService(
-                container.request.toService(clientId = container.clientId!!),
+    @PostMapping("/create", consumes = ["multipart/form-data"])
+    fun createService(
+        request: ServiceRequestDto,
+        @RequestHeader("X-Client-Id") clientId: String,
+    ): ResponseEntity<Service> {
+        val imageUrl = fileService.uploadFileAndGetUrl(request.mainPhoto)
+        val service =
+            request.toService(
+                clientId = clientId,
+                imageUrl = imageUrl,
             )
+
+        val created = serviceService.createService(service)
         return ResponseEntity.ok(created)
     }
 
